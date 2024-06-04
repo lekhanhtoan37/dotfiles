@@ -14,6 +14,31 @@ M.plugin = {
     "nvim-treesitter/nvim-treesitter",
     "theHamsta/nvim-dap-virtual-text",
     "mxsdev/nvim-dap-vscode-js",
+    {
+      "microsoft/vscode-js-debug",
+      lazy = true,
+      build = function()
+        local cwd = vim.fn.getcwd()
+        local plugin_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug"
+        vim.fn.chdir(plugin_path)
+        vim.fn.system({
+          "npm",
+          "install",
+          "--legacy-peer-deps",
+        })
+        vim.fn.system({
+          "npx",
+          "gulp",
+          "vsDebugServerBundle",
+        })
+        vim.fn.system({
+          "mv",
+          "dist",
+          "out",
+        })
+        vim.fn.chdir(cwd)
+      end,
+    },
   },
   event = "VeryLazy",
   config = function()
