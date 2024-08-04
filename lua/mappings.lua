@@ -5,7 +5,7 @@ local map = vim.keymap.set
 -- General
 map("n", ";", ":", { nowait = true, desc = "Command mode" })
 map("n", "<Leader><Leader>", ":nohlsearch<CR>", { desc = "Clear search highlighting" })
-map("n", "C-f", ":Format<CR>", { desc = "Format file" })
+-- map("n", "C-f", ":Format<CR>", { desc = "Format file" })
 map("n", "<Leader>s", ":ClangdSwitchSourceHeader<CR>", { desc = "Switch between header and source file" })
 
 -- Telescope
@@ -59,12 +59,12 @@ map("n", "<Leader>dt", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope dia
 map("n", "<Leader>da", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "Lsp code action" })
 
 -- Null-ls
-map(
-	"n",
-	"<C-f>",
-	"<cmd>lua require('configs.lsp.null-ls').lsp_formatting(vim.api.nvim_get_current_buf())<CR>",
-	{ desc = "Format current file using null-ls" }
-)
+-- map(
+-- 	"n",
+-- 	"<C-f>",
+-- 	"<cmd>lua require('configs.lsp.null-ls').lsp_formatting(vim.api.nvim_get_current_buf())<CR>",
+-- 	{ desc = "Format current file using null-ls" }
+-- )
 
 -- Buffer delete
 map("n", "<Leader>q", "<cmd>BufDel<CR>", { desc = "Close buffer" })

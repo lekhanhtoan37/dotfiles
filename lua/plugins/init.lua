@@ -67,16 +67,54 @@ return {
 					require("configs.lsp.null-ls")
 				end,
 			},
+            {
+              "lvimuser/lsp-inlayhints.nvim",
+              config = function()
+                require("lsp-inlayhints").setup()
+                vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+                vim.api.nvim_create_autocmd("LspAttach", {
+                  group = "LspAttach_inlayhints",
+                  callback = function(args)
+                    if not (args.data and args.data.client_id) then
+                      return
+                    end
+
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    require("lsp-inlayhints").on_attach(client, bufnr, false)
+                  end,
+                })
+              end,
+            },
+            {"williamboman/mason-lspconfig.nvim"}
 		},
 		config = function()
 			require("nvchad.configs.lspconfig").defaults() -- nvchad defaults for lua
 			require("configs.lsp")
+            -- require("nvchad.configs.lspconfig.gopls").setup({
+            --     ["ui.inlayhint.hints"] = {
+            --         parameterNames = true,
+            --         typeHints = true,
+            --         otherHints = true,
+            --     }
+            -- })
 		end, -- Override to setup mason-lspconfig
 	},
 
 	{
 		"williamboman/mason.nvim",
 		opts = overrides.mason,
+        config = function()
+            require("mason").setup()
+            require("mason-lspconfig").setup()
+            -- require("lsqconfig").gopls.setup({
+            --     ["ui.inlayhint.hints"] = {
+            --         parameterNames = true,
+            --         typeHints = true,
+            --         otherHints = true,
+            --     }
+            -- })
+        end,
 	},
 
 	{
@@ -86,6 +124,9 @@ return {
 
 	{
 		"nvim-tree/nvim-tree.lua",
+        dependencies = {
+            "kyazdani42/nvim-web-devicons",
+        },
 		opts = overrides.nvimtree,
 	},
 
@@ -290,9 +331,81 @@ return {
 			require("dap-go").setup(opts)
 		end,
 	},
-  {
-    'dgagn/diagflow.nvim',
-    -- event = 'LspAttach', This is what I use personnally and it works great
-    opts = {}
-  }
+    {
+        "mg979/vim-visual-multi",
+        branch = "master",
+        init = function()
+            vim.g.VM_maps = {}
+            vim.g.VM_maps["Find Under"] = ""
+        end,
+    },
+    -- {
+    --     "otavioschwanck/cool-substitute.nvim",
+    --     config = function()
+    --         require("cool-substitute").setup({
+    --             mappings = {
+    --                 start = 'gm', -- Mark word / region
+    --                 start_and_edit = 'gM', -- Mark word / region and also edit
+    --                 start_and_edit_word = 'g!M', -- Mark word / region and also edit.  Edit only full word.
+    --                 start_word = 'g!m', -- Mark word / region. Edit only full word
+    --                 apply_substitute_and_next = 'M', -- Start substitution / Go to next substitution
+    --                 apply_substitute_and_prev = '<C-b>', -- same as M but backwards
+    --                 apply_substitute_all = 'ga', -- Substitute all
+    --             }
+    --         })
+    --     end,
+    -- },
+    -- require("otavioschwanck/cool-substitute.nvim"),
+
+    -- {
+    --     "lvimuser/lsp-inlayhints.nvim",
+    --     event = 'LspAttach',
+    --     enabled = true,
+    --     lazy = false,
+    --     config = function()
+    --         require("lsp-inlayhints").setup(
+    --             {
+    --                 only_current_line = false,
+    --                 only_current_line_autocmd = "CursorHold",
+    --                 show_parameter_hints = true,
+    --                 parameter_hints_prefix = " ",
+    --                 other_hints_prefix = " ",
+    --                 max_len_align = false,
+    --                 max_len_align_padding = 1,
+    --                 highlight = "Comment",
+    --                 enabled = true,
+    --             }
+    --         )
+    --         vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+    --         vim.api.nvim_create_autocmd("LspAttach", {
+    --           group = "LspAttach_inlayhints",
+    --           callback = function(args)
+    --             if not (args.data and args.data.client_id) then
+    --               return
+    --             end
+    --
+    --             local bufnr = args.buf
+    --             local client = vim.lsp.get_client_by_id(args.data.client_id)
+    --             require("lsp-inlayhints").on_attach(client, bufnr)
+    --           end,
+    --         })
+    --         require('lsp-inlayhints').toggle()
+    --     end,
+    --     opts = {
+    --         inlay_hints = {
+    --           parameter_hints = {
+    --             remove_colon_start = false,
+    --           },
+    --           type_hints = {
+    --             remove_colon_start = false,
+    --             remove_colon_end = false,
+    --           },
+    --         },
+    --     }
+    -- },
+    {
+        'dgagn/diagflow.nvim',
+        -- event = 'LspAttach', This is what I use personnally and it works great
+        opts = {}
+    }
 }

@@ -20,6 +20,12 @@ for _, lsp in ipairs(servers) do
 		opts = merge_tb("force", settings, opts)
 	end
 
+    if lsp == "gopls" then
+        -- print(vim.pretty_print(opts))
+        vim.inspect(opts)
+        -- print(opts)
+    end
+
 	lspconfig[lsp].setup(opts)
 end
 

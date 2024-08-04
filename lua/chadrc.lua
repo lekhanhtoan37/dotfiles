@@ -6,8 +6,8 @@ local highlights = require("highlights")
 local overrides = require("configs.overrides")
 
 M.ui = {
-	theme = "onedark",
-	theme_toggle = { "onedark", "one_light" },
+	theme = "catppuccin",
+	theme_toggle = { "onedark","catppuccin", "one_light", 'palenight', 'github_dark', 'vscode_dark' },
 
 	hl_override = highlights.override,
 	hl_add = highlights.add,
