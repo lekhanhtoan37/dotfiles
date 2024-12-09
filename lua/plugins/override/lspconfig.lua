@@ -72,8 +72,8 @@ return {
             },
           },
         },
-
       },
+      rust_analyzer = {},
       yamlls = {},
       zls = {},
     }
