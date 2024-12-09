@@ -55,7 +55,7 @@ return {
     dap_vscode_js.setup({
       node_path = "node",
       debugger_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug",
-      adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
+      adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost", "debugpy" },
       continue = function()
         if vim.fn.filereadable('.vscode/launch.json') then
           require('dap.ext.vscode').load_launchjs()
@@ -105,7 +105,7 @@ return {
             "!**/node_modules/**",
           },
         },
-        {
+        --[[ {
           type = "pwa-node",
           request = "launch",
           name = "Launch Current File (pwa-node with deno)",
@@ -173,7 +173,7 @@ return {
           cwd = vim.fn.getcwd(),
           processId = dap_utils.pick_process,
           skipFiles = { "<node_internals>/**" },
-        },
+        }, ]]
       }
     end
   end

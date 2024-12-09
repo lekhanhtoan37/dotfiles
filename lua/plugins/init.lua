@@ -6,6 +6,7 @@ return {
   { import = "plugins.spec.autopairs" },
   { import = "plugins.spec.better-escape" },
   { import = "plugins.spec.ccc" },
+  { import = "plugins.spec.rustaceanvim" },
   { import = "plugins.spec.cd-project" },
   { import = "plugins.spec.cloak" },
   { import = "plugins.spec.codesnap" },
@@ -44,7 +45,6 @@ return {
   { import = "plugins.spec.precognition" },
   { import = "plugins.spec.rainbow-delimiters" },
   { import = "plugins.spec.regexplainer" },
-  { import = "plugins.spec.rustaceanvim" },
   { import = "plugins.spec.screenkey" },
   { import = "plugins.spec.scrolleof" },
   { import = "plugins.spec.showkeys" },
@@ -77,6 +77,7 @@ return {
   { import = "plugins.override.telescope" },
   { import = "plugins.override.ui" },
   { import = "plugins.override.whichkey" },
-
-  { import = "plugins.spec.ai-avante" }
+  { import = "plugins.spec.nvim-spectre" },
+  { import = "plugins.spec.ai-avante" },
+  { import = "plugins.spec.go" }
 }

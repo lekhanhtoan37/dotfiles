@@ -2,31 +2,46 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   lazy = false,
-  version = false, -- set this if you want to always pull the latest change
+  version = "v0.0.9", -- set this if you want to always pull the latest change
   opts = {
     -- Add any configuration here
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "openrouterclaude",        -- Recommend using Claude
-    auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+    provider = "openrouterclaude", -- Recommend using Claude
+    -- provider = "claude", -- Recommend using Claudeava
+    -- auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     vendors = {
       openrouterclaude = {
-        endpoint = "https://openrouter.ai/api/v1/chat/completions",
-        model = "anthropic/claude-3.5-sonnet",
+        endpoint = "https://openrouter.ai/api",
+        model = "anthropic/claude-3-5-haiku",
         api_key_name = "OPENROUTER_API_KEY",
         parse_curl_args = function(opts, code_opts)
+          --[[ local messages = {}
+          local first_msg = { role = "system", content = code_opts.system_prompt }
+          table.insert(messages, first_msg)
+          if code_opts.messages then
+            table.insert(messages, require("avante.providers.openai").parse_messages(code_opts))
+            --[[ local content = ""
+                for idx, msg in ipairs(code_opts.) do
+                  if content == "" then
+                    content = content .. msg.content
+                  else
+                    content = content .. "\n" .. msg.content
+                  end
+                end
+                local next_msg = { role = "user", content = content }
+                table.insert(messages, next_msg) ]]
+          local messages = require("avante.providers.openai").parse_messages(code_opts)
           return {
-            url = opts.endpoint,
+            url = opts.endpoint .. "/v1/chat/completions",
             headers = {
-              ["Accept"] = "application/json",
+              -- ["Accept"] = "application/json",
               ["Content-Type"] = "application/json",
               ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
             },
+            insecure = true,
             body = {
               model = opts.model,
-              messages = { -- you can make your own message, but this is very advanced
-                { role = "system", content = code_opts.system_prompt },
-                { role = "user",   content = require("avante.providers.openai").get_user_message(code_opts) },
-              },
+              messages = messages,
               temperature = 0,
               max_tokens = 8192,
               stream = true, -- this will be set by default.
@@ -35,14 +50,14 @@ return {
         end,
         -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
         parse_response_data = function(data_stream, event_state, opts)
-          require("avante.providers").openai.parse_response(data_stream, event_state, opts)
+          require("avante.providers.openai").parse_response(data_stream, event_state, opts)
         end,
       }
     },
     claude = {
       -- anthropic
-      endpoint = "https://openrouter.ai/api/v1",
-      model = "claude-3.5-sonnet",
+      endpoint = "https://api.anthropic.com",
+      model = "claude-3-5-sonnet-20241022",
       temperature = 0,
       max_tokens = 4096,
     },
@@ -85,7 +100,7 @@ return {
         insert = "<C-s>",
       },
       sidebar = {
-        apply_all = "A",
+        apply_all = "<leader>-A",
         apply_cursor = "a",
         switch_windows = "<Tab>",
         reverse_switch_windows = "<S-Tab>",
@@ -137,6 +152,12 @@ return {
     "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
+    {
+      "MeanderingProgrammer/render-markdown.nvim",
+      lazy = false,
+      opts = { file_types = { "markdown", "Avante" } },
+      ft = { "markdown", "Avante" },
+    },
     --- The below dependencies are optional,
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
     "zbirenbaum/copilot.lua",      -- for providers='copilot'

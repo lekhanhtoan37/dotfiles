@@ -4,6 +4,19 @@ return {
   "saecki/crates.nvim",
   ft = { "rust", "toml" },
   dependencies = "nvim-lua/plenary.nvim",
+  opts = {
+    completion = {
+      crates = {
+        enabled = true,
+      },
+    },
+    lsp = {
+      enabled = true,
+      actions = true,
+      completion = true,
+      hover = true,
+    },
+  },
   config = function(_, opts)
     local crates = require "crates"
     local cmp = require "cmp"

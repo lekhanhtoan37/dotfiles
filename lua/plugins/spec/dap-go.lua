@@ -70,10 +70,5 @@ return {
       local ext_vscode = require("dap.ext.vscode")
       ext_vscode.load_launchjs()
     end
-
-    local dap = require("dap")
-    dap.configurations.go = {
-
-    }
   end,
 }

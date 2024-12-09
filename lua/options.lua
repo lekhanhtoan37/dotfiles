@@ -7,6 +7,7 @@ local custom = {
     skip_ts_context_commentstring_module = true,
     tabufline_visible = true,
     showtabline = 1,
+    lazyvim_rust_diagnostics = "rust-analyzer",
   },
   opt = {
     encoding = "utf-8",

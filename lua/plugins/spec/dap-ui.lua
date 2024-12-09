@@ -82,9 +82,9 @@ return {
     dap.listeners.before.launch.dapui_config = function()
       dapui.open()
     end
-    dap.listeners.before.event_terminated.dapui_config = function()
+    --[[ dap.listeners.before.event_terminated.dapui_config = function()
       dapui.close()
-    end
+    end ]]
     dap.listeners.before.event_exited.dapui_config = function()
       dapui.close()
     end
@@ -104,6 +104,7 @@ return {
 
     keymap("n", "<Leader>dww", ":lua require(\"dapui\").toggle()<CR>")
     keymap("n", "<Leader>dw[", ":lua require(\"dapui\").toggle(1)<CR>")
+    keymap("n", "<Leader>DS", ":lua require(\"dapui\").close()<CR>")
     keymap("n", "<Leader>dw]", ":lua require(\"dapui\").toggle(2)<CR>")
     map("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", { desc = "DAP Toggle breakpoint" })
     map("n", "<leader>dt", function()

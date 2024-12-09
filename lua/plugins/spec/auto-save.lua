@@ -4,7 +4,7 @@ return {
   -- src: https://github.com/pocco81/auto-save.nvim
   "Pocco81/auto-save.nvim",
   lazy = false,
-  enabled = true,
+  enabled = false,
   execution_message = {
     message = function() -- message to print on save
       return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))

@@ -20,7 +20,7 @@ return {
         },
         follow = true,
         no_ignore = true,
-        hidden = false,
+        hidden = true,
         prompt_prefix = " 󱡴  ",
         prompt_title = "All Files",
       })
@@ -35,6 +35,8 @@ return {
             preview = SIZES.PREVIEW_WIDTH,
           },
         },
+        hidden = true,
+        unrestricted = true,
         prompt_title = "Files",
       })
     end, { desc = "Telescope search files" })

@@ -322,8 +322,8 @@ return {
       view = {
         -- Allow statuscolumn to be applied on nvim-tree
         preserve_window_proportions = true,
-        -- side = "left",
-        side = "right",
+        side = "left",
+        -- side = "right",
         signcolumn = "no",
         --[[ float = {
           enable = true,
