@@ -2,7 +2,7 @@
 ---@diagnostic disable: different-requires
 return {
   "saecki/crates.nvim",
-  ft = { "rust", "toml" },
+  ft = { "toml" },
   dependencies = "nvim-lua/plenary.nvim",
   opts = {
     completion = {

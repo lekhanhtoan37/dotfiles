@@ -6,7 +6,6 @@ return {
   { import = "plugins.spec.autopairs" },
   { import = "plugins.spec.better-escape" },
   { import = "plugins.spec.ccc" },
-  { import = "plugins.spec.rustaceanvim" },
   { import = "plugins.spec.cd-project" },
   { import = "plugins.spec.cloak" },
   { import = "plugins.spec.codesnap" },
@@ -79,5 +78,6 @@ return {
   { import = "plugins.override.whichkey" },
   { import = "plugins.spec.nvim-spectre" },
   { import = "plugins.spec.ai-avante" },
-  { import = "plugins.spec.go" }
+  { import = "plugins.spec.rustaceanvim" },
+  { import = "plugins.spec.go" },
 }

@@ -169,18 +169,7 @@ for i = 1, 9 do
   map("n", "<A-" .. i .. ">", i .. "gt", { desc = "Tab go to tab " .. i })
 end
 
--- Utils
+--kUtils
 map("n", "gh", function()
   utils.go_to_github_link()
 end, { desc = "Go to GitHub link generated from string" })
-
-map(
-  "n",
-  "<leader>rl",
-  "<cmd>s/[a-zA-Z]/\\=nr2char((char2nr(submatch(0)) - (char2nr(submatch(0)) >= 97 ? 97 : 65) + 13) % 26 + (char2nr(submatch(0)) >= 97 ? 97 : 65))/g<CR>",
-  { desc = "_ Mum and dad were having fun" }
-)
-
-map("n", "<leader>rf", function()
-  vim.cmd [[%s/[a-zA-Z]/\=nr2char((char2nr(submatch(0)) - (char2nr(submatch(0)) >= 97 ? 97 : 65) + 13) % 26 + (char2nr(submatch(0)) >= 97 ? 97 : 65))/g]]
-end, { desc = "_ Mum and dad were having fun" })

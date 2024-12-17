@@ -27,7 +27,7 @@ local on_attach = function(_, bufnr)
   end, { desc = "LSP list workspace folders" })
 
   map("n", "<leader>ra", function()
-    require "nvchad.lsp.renamer" ()
+    require "nvchad.lsp.renamer"()
   end, { desc = "LSP rename" })
 end
 
@@ -51,6 +51,7 @@ M.on_init = function(client, _)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
@@ -65,6 +66,9 @@ capabilities.textDocument.completion.completionItem = {
       "documentation",
       "detail",
       "additionalTextEdits",
+      "insertText",
+      "insertTextMode",
+      "command",
     },
   },
 }

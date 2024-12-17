@@ -2,6 +2,7 @@ return {
   "supermaven-inc/supermaven-nvim",
   event = "LspAttach",
   opts = {
+    -- ignore_filetypes = { rust = true},
     keymaps = {
       accept_suggestion = "<Tab>",
       clear_suggestion = "<C-x>",

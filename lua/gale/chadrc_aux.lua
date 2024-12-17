@@ -177,13 +177,13 @@ local git_custom = function()
   local branch_hl = "%#St_GitBranch#"
 
   local added = (git_status.added and git_status.added ~= 0) and (add_hl .. "  " .. clear_hl .. git_status.added)
-    or ""
+      or ""
   local changed = (git_status.changed and git_status.changed ~= 0)
       and (changed_hl .. "  " .. clear_hl .. git_status.changed)
-    or ""
+      or ""
   local removed = (git_status.removed and git_status.removed ~= 0)
       and (rm_hl .. "  " .. clear_hl .. git_status.removed)
-    or ""
+      or ""
   local branch_name = branch_hl .. " " .. clear_hl .. git_status.head
 
   return run .. " " .. branch_name .. " " .. added .. changed .. removed .. stop
@@ -200,7 +200,7 @@ local lspx = function()
       if client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)] then
         count = count + 1
         display = (vim.o.columns > 100 and run .. " %#St_Lsp#  LSP ~ " .. client.name .. " " .. stop)
-          or run .. " %#St_Lsp#  LSP " .. stop
+            or run .. " %#St_Lsp#  LSP " .. stop
       end
     end
   end
@@ -215,9 +215,9 @@ end
 M.modules = {
   ---@type table<string, string|fun():string>
   statusline = {
-    separator = " ", -- Add space between modules
+    separator = " ",       -- Add space between modules
     hack = "%#@comment#%", -- Hack to make module highlight visible
-    tint = "%#StText#", -- Force grey on modules that absorb neighbour colour
+    tint = "%#StText#",    -- Force grey on modules that absorb neighbour colour
     oil_dir_cwd = "%@OilDirCWD@",
     force_stop = "%X",
 

@@ -8,8 +8,8 @@ local themes_customs = require("gale.chadrc_aux").themes_customs
 
 M.base46 = {
   transparency = true,
-  theme = "github_dark",
-  theme_toggle = { "github_dark", "github_dark" },
+  theme = "catppuccin-frape",
+  theme_toggle = { "catppuccin-frape", "catppuccin-frape" },
   integrations = {
     "blankline",
     "cmp",
