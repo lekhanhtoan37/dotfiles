@@ -79,5 +79,6 @@ return {
   { import = "plugins.spec.nvim-spectre" },
   { import = "plugins.spec.ai-avante" },
   { import = "plugins.spec.rustaceanvim" },
+  { import = "plugins.spec.overseer" },
   { import = "plugins.spec.go" },
 }

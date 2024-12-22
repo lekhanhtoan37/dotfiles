@@ -2,7 +2,7 @@
 ---@diagnostic disable: different-requires
 return {
   "saecki/crates.nvim",
-  ft = { "toml" },
+  event = "BufRead Cargo.toml",
   dependencies = "nvim-lua/plenary.nvim",
   opts = {
     completion = {
