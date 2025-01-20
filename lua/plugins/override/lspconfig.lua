@@ -40,7 +40,7 @@ return {
       ocamllsp = {},
       pyright = {},
       ts_ls = {},
-      ruff_lsp = {
+      ruff = {
         on_attach = function(client, _)
           -- prefer pyright's hover provider
           client.server_capabilities.hoverProvider = false
@@ -53,11 +53,11 @@ return {
         settings = {
           javascript = {
             inlayHints = lsp.inlay_hints_settings,
-            updateImportsOnFileMove = 'always',
+            updateImportsOnFileMove = "always",
           },
           typescript = {
             inlayHints = lsp.inlay_hints_settings,
-            updateImportsOnFileMove = 'always',
+            updateImportsOnFileMove = "always",
           },
           vtsls = {
             tsserver = {
@@ -72,7 +72,6 @@ return {
             },
           },
         },
-
       },
       yamlls = {},
       zls = {},

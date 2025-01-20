@@ -9,29 +9,29 @@ return {
       },
     },
     "theHamsta/nvim-dap-virtual-text",
-    "mxsdev/nvim-dap-vscode-js",
+    -- "mxsdev/nvim-dap-vscode-js",
     {
       "microsoft/vscode-js-debug",
       lazy = false,
       build = function()
         local cwd = vim.fn.getcwd()
-        local plugin_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug"
+        local plugin_path = vim.fn.stdpath "data" .. "/lazy/" .. "vscode-js-debug"
         vim.fn.chdir(plugin_path)
-        vim.fn.system({
+        vim.fn.system {
           "npm",
           "install",
           "--legacy-peer-deps",
-        })
-        vim.fn.system({
+        }
+        vim.fn.system {
           "npx",
           "gulp",
           "vsDebugServerBundle",
-        })
-        vim.fn.system({
+        }
+        vim.fn.system {
           "mv",
           "dist",
           "out",
-        })
+        }
         vim.fn.chdir(cwd)
       end,
     },
@@ -39,8 +39,8 @@ return {
   event = "VeryLazy",
   lazy = false,
   config = function()
-    local dap = require("dap")
-    local dap_utils = require("dap.utils")
+    local dap = require "dap"
+    local dap_utils = require "dap.utils"
     -- # DAP UI
     -- # Sign
     vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
@@ -49,21 +49,20 @@ return {
     vim.fn.sign_define("DapStopped", { text = "🈁", texthl = "", linehl = "", numhl = "" })
     vim.fn.sign_define("DapBreakpointRejected", { text = "⬜", texthl = "", linehl = "", numhl = "" })
 
-
     -- dap-vscode-js config
-    local dap_vscode_js = require("dap-vscode-js")
-    dap_vscode_js.setup({
+    --[[ local dap_vscode_js = require "dap-vscode-js"
+    dap_vscode_js.setup {
       node_path = "node",
-      debugger_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug",
+      debugger_path = vim.fn.stdpath "data" .. "/lazy/" .. "vscode-js-debug",
       adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
       continue = function()
-        if vim.fn.filereadable('.vscode/launch.json') then
-          require('dap.ext.vscode').load_launchjs()
+        if vim.fn.filereadable ".vscode/launch.json" then
+          require("dap.ext.vscode").load_launchjs()
         end
         dap.continue()
-      end
-    })
-
+      end,
+    }
+]]
     local exts = {
       "go",
       "javascript",
@@ -75,6 +74,26 @@ return {
       "svelte",
     }
 
+    local function get_pkg_path(pkg, path)
+      pcall(require, "mason")
+      local root = vim.env.MASON or (vim.fn.stdpath "data" .. "/mason")
+      path = path or ""
+      local ret = root .. "/packages/" .. pkg .. "/" .. path
+      return ret
+    end
+    require("dap").adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          get_pkg_path("js-debug-adapter", "/js-debug/src/dapDebugServer.js"),
+          "${port}",
+        },
+      },
+    }
+
     for i, ext in ipairs(exts) do
       dap.configurations[ext] = {
         {
@@ -83,7 +102,7 @@ return {
           name = "Launch Current File (pwa-node)",
           -- cwd = vim.fn.getcwd(),
           cwd = "${workspaceFolder}",
-          args = { "${file}" },
+          args = { "${file}", "${port}" },
           sourceMaps = true,
           protocol = "inspector",
         },
@@ -93,11 +112,18 @@ return {
           name = "Launch Current File (pwa-node with ts-node)",
           -- cwd = vim.fn.getcwd(),
           cwd = "${workspaceFolder}",
-          runtimeArgs = { "--loader", "ts-node/esm" },
           runtimeExecutable = "node",
           args = { "${file}" },
           sourceMaps = true,
-          runtimeArgs = { "--nolazy", "--inspect", "-r", "ts-node/register", "-r", "tsconfig-paths/register", "--unhandled-rejections=strict" },
+          runtimeArgs = {
+            "--nolazy",
+            "--inspect",
+            "-r",
+            "ts-node/register",
+            "-r",
+            "tsconfig-paths/register",
+            "--unhandled-rejections=strict",
+          },
           protocol = "inspector",
           skipFiles = { "<node_internals>/**", "node_modules/**" },
           resolveSourceMapLocations = {
@@ -176,5 +202,5 @@ return {
         },
       }
     end
-  end
+  end,
 }
