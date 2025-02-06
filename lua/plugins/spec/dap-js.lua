@@ -15,23 +15,23 @@ return {
       lazy = false,
       build = function()
         local cwd = vim.fn.getcwd()
-        local plugin_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug"
+        local plugin_path = vim.fn.stdpath "data" .. "/lazy/" .. "vscode-js-debug"
         vim.fn.chdir(plugin_path)
-        vim.fn.system({
+        vim.fn.system {
           "npm",
           "install",
           "--legacy-peer-deps",
-        })
-        vim.fn.system({
+        }
+        vim.fn.system {
           "npx",
           "gulp",
           "vsDebugServerBundle",
-        })
-        vim.fn.system({
+        }
+        vim.fn.system {
           "mv",
           "dist",
           "out",
-        })
+        }
         vim.fn.chdir(cwd)
       end,
     },
@@ -39,8 +39,8 @@ return {
   event = "VeryLazy",
   lazy = false,
   config = function()
-    local dap = require("dap")
-    local dap_utils = require("dap.utils")
+    local dap = require "dap"
+    local dap_utils = require "dap.utils"
     -- # DAP UI
     -- # Sign
     vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
@@ -49,20 +49,19 @@ return {
     vim.fn.sign_define("DapStopped", { text = "🈁", texthl = "", linehl = "", numhl = "" })
     vim.fn.sign_define("DapBreakpointRejected", { text = "⬜", texthl = "", linehl = "", numhl = "" })
 
-
     -- dap-vscode-js config
-    local dap_vscode_js = require("dap-vscode-js")
-    dap_vscode_js.setup({
+    local dap_vscode_js = require "dap-vscode-js"
+    dap_vscode_js.setup {
       node_path = "node",
-      debugger_path = vim.fn.stdpath("data") .. "/lazy/" .. "vscode-js-debug",
+      debugger_path = vim.fn.stdpath "data" .. "/lazy/" .. "vscode-js-debug",
       adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost", "debugpy" },
       continue = function()
-        if vim.fn.filereadable('.vscode/launch.json') then
-          require('dap.ext.vscode').load_launchjs()
+        if vim.fn.filereadable ".vscode/launch.json" then
+          require("dap.ext.vscode").load_launchjs()
         end
         dap.continue()
-      end
-    })
+      end,
+    }
 
     local exts = {
       "go",
@@ -97,7 +96,15 @@ return {
           runtimeExecutable = "node",
           args = { "${file}" },
           sourceMaps = true,
-          runtimeArgs = { "--nolazy", "--inspect", "-r", "ts-node/register", "-r", "tsconfig-paths/register", "--unhandled-rejections=strict" },
+          runtimeArgs = {
+            "--nolazy",
+            "--inspect",
+            "-r",
+            "ts-node/register",
+            "-r",
+            "tsconfig-paths/register",
+            "--unhandled-rejections=strict",
+          },
           protocol = "inspector",
           skipFiles = { "<node_internals>/**", "node_modules/**" },
           resolveSourceMapLocations = {
@@ -105,76 +112,7 @@ return {
             "!**/node_modules/**",
           },
         },
-        --[[ {
-          type = "pwa-node",
-          request = "launch",
-          name = "Launch Current File (pwa-node with deno)",
-          -- cwd = vim.fn.getcwd(),
-          cwd = "${workspaceFolder}",
-          runtimeArgs = { "run", "--inspect", "--allow-all", "${file}" },
-          runtimeExecutable = "deno",
-          attachSimplePort = 9229,
-        },
-        {
-          type = "pwa-node",
-          request = "launch",
-          name = "Launch Test Current File (pwa-node with jest)",
-          -- cwd = vim.fn.getcwd(),
-          cwd = "${workspaceFolder}",
-          runtimeArgs = { "${workspaceFolder}/node_modules/.bin/jest" },
-          runtimeExecutable = "node",
-          args = { "${file}", "--coverage", "false" },
-          rootPath = "${workspaceFolder}",
-          sourceMaps = true,
-          console = "integratedTerminal",
-          internalConsoleOptions = "neverOpen",
-          skipFiles = { "<node_internals>/**", "node_modules/**" },
-        },
-        {
-          type = "pwa-node",
-          request = "launch",
-          name = "Launch Test Current File (pwa-node with vitest)",
-          -- cwd = vim.fn.getcwd(),
-          cwd = "${workspaceFolder}",
-          program = "${workspaceFolder}/node_modules/vitest/vitest.mjs",
-          args = { "--inspect", "--threads", "false", "run", "${file}" },
-          autoAttachChildProcesses = true,
-          smartStep = true,
-          console = "integratedTerminal",
-          skipFiles = { "<node_internals>/**", "node_modules/**" },
-        },
-        {
-          type = "pwa-node",
-          request = "launch",
-          name = "Launch Test Current File (pwa-node with deno)",
-          cwd = vim.fn.getcwd(),
-          runtimeArgs = { "test", "--inspect", "--allow-all", "${file}" },
-          runtimeExecutable = "deno",
-          smartStep = true,
-          console = "integratedTerminal",
-          attachSimplePort = 9229,
-        },
-        {
-          type = "pwa-chrome",
-          request = "attach",
-          name = "Attach Program (pwa-chrome, select port)",
-          program = "${file}",
-          cwd = vim.fn.getcwd(),
-          sourceMaps = true,
-          port = function()
-            return vim.fn.input("Select port: ", 9222)
-          end,
-          webRoot = "${workspaceFolder}",
-        },
-        {
-          type = "pwa-node",
-          request = "attach",
-          name = "Attach Program (pwa-node, select pid)",
-          cwd = vim.fn.getcwd(),
-          processId = dap_utils.pick_process,
-          skipFiles = { "<node_internals>/**" },
-        }, ]]
       }
     end
-  end
+  end,
 }

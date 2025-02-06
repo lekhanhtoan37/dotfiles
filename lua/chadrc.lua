@@ -8,8 +8,8 @@ local themes_customs = require("gale.chadrc_aux").themes_customs
 
 M.base46 = {
   transparency = true,
-  theme = "catppuccin-frape",
-  theme_toggle = { "catppuccin-frape", "catppuccin-frape" },
+  theme = "monekai",
+  theme_toggle = { "monekai", "monekai" },
   integrations = {
     "blankline",
     "cmp",
