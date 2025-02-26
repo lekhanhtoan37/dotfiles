@@ -103,7 +103,7 @@ create_cmd("FormatToggle", function(args)
   end
 end, {
   desc = "Toggle format on save",
-  bang = true,
+  bang = false,
 })
 
 create_cmd("FormatFile", function()

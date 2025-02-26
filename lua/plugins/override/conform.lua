@@ -5,6 +5,7 @@ return {
   "stevearc/conform.nvim",
   event = "BufWritePre",
   init = function()
+    vim.g.disable_autoformat = true
     vim.keymap.set("n", "<leader>fm", function()
       require("conform").format { lsp_fallback = true }
     end, { desc = "General format file" })

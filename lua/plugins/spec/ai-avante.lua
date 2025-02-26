@@ -12,7 +12,8 @@ return {
     vendors = {
       openrouterdeepseek = {
         endpoint = "https://openrouter.ai/api",
-        model = "deepseek/deepseek-r1",
+        -- model = "deepseek/deepseek-r1",
+        model = "deepseek/deepseek-r1-distill-llama-70b",
         api_key_name = "OPENROUTER_API_KEY",
         parse_curl_args = function(opts, code_opts)
           --[[ local messages = {}
@@ -42,8 +43,8 @@ return {
             body = {
               model = opts.model,
               provider = {
-                ["allow_fallbacks"] = true,
-                ["order"] = { "DeepSeek", "Novita" },
+                ["allow_fallbacks"] = false,
+                ["order"] = { "DeepSeek", "DeepInfra" },
               },
               messages = messages,
               temperature = 0,
