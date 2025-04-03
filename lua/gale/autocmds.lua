@@ -208,3 +208,15 @@ autocmd("TermOpen", {
     buf_map(event.buf, "t", mouse_actions, "<nop>")
   end,
 })
+
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.lsp.buf.document_highlight()
+  end,
+})
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function()
+    vim.lsp.buf.clear_references()
+  end,
+})

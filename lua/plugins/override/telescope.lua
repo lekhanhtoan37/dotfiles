@@ -7,7 +7,7 @@ return {
     local SIZES = {
       HEIGHT = 0.75,
       WIDTH = 0.8,
-      PREVIEW_WIDTH = 0.3,
+      PREVIEW_WIDTH = 0.6,
     }
 
     map("n", "<leader>fa", function()
@@ -55,13 +55,20 @@ return {
 
     map("n", "<leader>fw", function()
       pickers.grep("live_grep", nil, nil, {
+        layout_strategy = "horizontal",
         layout_config = {
-          vertical = {
+          --[[ vertical = {
             width = SIZES.WIDTH,
             height = SIZES.HEIGHT,
+          }, ]]
+          horizontal = {
+            width = SIZES.WIDTH,
+            height = SIZES.HEIGHT,
+            preview = SIZES.PREVIEW_WIDTH,
           },
         },
         prompt_title = "Live Grep",
+        previewer = true,
       })
     end, { desc = "Telescope live grep" })
 

@@ -30,7 +30,7 @@ return {
       vue = { "prettier" },
       lua = { "stylua" },
       toml = { "taplo" },
-      yaml = { "yamlfmt" },
+      -- yaml = { "yamlfmt" },
       zig = { "zigfmt" },
     },
     -- Set the log level. Use `:ConformInfo` to see the location of the log file.

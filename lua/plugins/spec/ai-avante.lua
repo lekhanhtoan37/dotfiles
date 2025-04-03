@@ -2,104 +2,38 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   lazy = false,
-  version = "v0.0.15", -- set this if you want to always pull the latest change
+  version = "v0.0.23", -- set this if you want to always pull the latest change
   opts = {
     -- Add any configuration here
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "openrouterdeepseek", -- Recommend using Claude
+    -- provider = "openrouterdeepseek", -- Recommend using Claude
+    provider = "openrouterdeepseekr1",
     -- provider = "claude", -- Recommend using Claudeava
     -- auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     vendors = {
-      openrouterdeepseek = {
-        endpoint = "https://openrouter.ai/api",
-        -- model = "deepseek/deepseek-r1",
+      openrouterdeepseekdistill = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
         model = "deepseek/deepseek-r1-distill-llama-70b",
-        api_key_name = "OPENROUTER_API_KEY",
-        parse_curl_args = function(opts, code_opts)
-          --[[ local messages = {}
-          local first_msg = { role = "system", content = code_opts.system_prompt }
-          table.insert(messages, first_msg)
-          if code_opts.messages then
-            table.insert(messages, require("avante.providers.openai").parse_messages(code_opts))
-            --[[ local content = ""
-                for idx, msg in ipairs(code_opts.) do
-                  if content == "" then
-                    content = content .. msg.content
-                  else
-                    content = content .. "\n" .. msg.content
-                  end
-                end
-                local next_msg = { role = "user", content = content }
-                table.insert(messages, next_msg) ]]
-          local messages = require("avante.providers.openai").parse_messages(code_opts)
-          return {
-            url = opts.endpoint .. "/v1/chat/completions",
-            headers = {
-              -- ["Accept"] = "application/json",
-              ["Content-Type"] = "application/json",
-              ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-            },
-            insecure = true,
-            body = {
-              model = opts.model,
-              provider = {
-                ["allow_fallbacks"] = false,
-                ["order"] = { "DeepSeek", "DeepInfra" },
-              },
-              messages = messages,
-              temperature = 0,
-              max_tokens = 8192,
-              stream = true, -- this will be set by default.
-            },
-          }
-        end,
-        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-        parse_response_data = function(data_stream, event_state, opts)
-          require("avante.providers.openai").parse_response(data_stream, event_state, opts)
-        end,
+      },
+      openrouterdeepseekr1 = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = "deepseek/deepseek-rdistill1",
       },
       openrouterclaude = {
-        endpoint = "https://openrouter.ai/api",
-        model = "anthropic/claude-3-5-haiku",
-        api_key_name = "OPENROUTER_API_KEY",
-        parse_curl_args = function(opts, code_opts)
-          --[[ local messages = {}
-          local first_msg = { role = "system", content = code_opts.system_prompt }
-          table.insert(messages, first_msg)
-          if code_opts.messages then
-            table.insert(messages, require("avante.providers.openai").parse_messages(code_opts))
-            --[[ local content = ""
-                for idx, msg in ipairs(code_opts.) do
-                  if content == "" then
-                    content = content .. msg.content
-                  else
-                    content = content .. "\n" .. msg.content
-                  end
-                end
-                local next_msg = { role = "user", content = content }
-                table.insert(messages, next_msg) ]]
-          local messages = require("avante.providers.openai").parse_messages(code_opts)
-          return {
-            url = opts.endpoint .. "/v1/chat/completions",
-            headers = {
-              -- ["Accept"] = "application/json",
-              ["Content-Type"] = "application/json",
-              ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
-            },
-            insecure = true,
-            body = {
-              model = opts.model,
-              messages = messages,
-              temperature = 0,
-              max_tokens = 8192,
-              stream = true, -- this will be set by default.
-            },
-          }
-        end,
-        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
-        parse_response_data = function(data_stream, event_state, opts)
-          require("avante.providers.openai").parse_response(data_stream, event_state, opts)
-        end,
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = "anthropic/claude-3.7-sonnet"
+      },
+      groq = {
+        __inherited_from = "openai",
+        api_key_name = "GROQ_API_KEY",
+        endpoint = "https://api.groq.com/openai/v1/",
+        model = "llama-3.1-70b-versatile",
       },
     },
     claude = {
