@@ -8,8 +8,8 @@ local themes_customs = require("gale.chadrc_aux").themes_customs
 
 M.base46 = {
   transparency = true,
-  theme = "monekai",
-  theme_toggle = { "monekai", "monekai" },
+  theme = "carbonfox",
+  theme_toggle = { "carbonfox", "carbonfox" },
   integrations = {
     "blankline",
     "cmp",

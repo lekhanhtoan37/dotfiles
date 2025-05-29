@@ -16,12 +16,28 @@ return {
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
         model = "deepseek/deepseek-r1-distill-llama-70b",
+        prompt_opts = {
+          extra_body={
+            provide = {
+              order = { 'fireworks', 'together' },
+              sort  = 'throughput'
+            }
+          }
+        }
       },
       openrouterdeepseekr1 = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
-        model = "deepseek/deepseek-rdistill1",
+        model = "deepseek/deepseek-r1-0528",
+        prompt_opts = {
+          extra_body={
+            provide = {
+              order = { 'deepinfra', 'gmicloud', 'lambda' },
+              sort  = 'throughput'
+            }
+          }
+        }
       },
       openrouterclaude = {
         __inherited_from = 'openai',
