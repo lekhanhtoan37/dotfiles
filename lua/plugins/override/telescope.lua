@@ -4,6 +4,7 @@ return {
   opts = function(_, opts)
     local map = vim.keymap.set
     local pickers = require("gale.telescope").pickers
+    local builtin = require("telescope.builtin")
     local SIZES = {
       HEIGHT = 0.75,
       WIDTH = 0.8,
@@ -89,11 +90,19 @@ return {
     map("n", "<leader>ft", "<cmd>Telescope terms<CR>", { desc = "Telescope terms" })
     map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope NvChad themes" })
     map("n", "<leader>fr", "<cmd>Telescope lsp_references<CR>", { desc = "Telescope LSP references" })
+    map("n", "<leader>fp", function ()
+        builtin.lsp_document_symbols({
+          fname_width = 100,
+          symbol_width = 100,
+          prompt_title = "LSP Document Symbols",
+        })
+    end, { desc = "Telescope LSP document symbols" })
+
     map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "Telescope find marks" })
     map("n", "<leader>fh", "<cmd>Telescope highlights<CR>", { desc = "Telescope find highlights" })
     map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "Telescope LSP diagnostics" })
     map("n", "<leader>ts", "<cmd>Telescope treesitter<CR>", { desc = "Telescope TreeSitter" })
-    map("n", "<leader>fp", "<cmd>Telescope builtin<CR>", { desc = "Telescope pickers" })
+    map("n", "<leader>fP", "<cmd>Telescope builtin<CR>", { desc = "Telescope pickers" })
     map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "Telescope Git commits" })
     map("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "Telescope Git status" })
     map("n", "<leader>f?", "<cmd>Telescope help_tags<CR>", { desc = "Telescope help tags" })
