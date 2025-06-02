@@ -11,11 +11,26 @@ return {
     -- provider = "claude", -- Recommend using Claudeava
     -- auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     vendors = {
+      gemini25propreview = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = "google/gemini-2.5-pro-preview",
+        max_tokens = 64000,
+        prompt_opts = {
+          extra_body={
+            provide = {
+              sort  = 'throughput'
+            }
+          }
+        }
+      },
       openrouterdeepseekdistill = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
         model = "deepseek/deepseek-r1-distill-llama-70b",
+        max_tokens = 64000,
         prompt_opts = {
           extra_body={
             provide = {
@@ -25,19 +40,19 @@ return {
           }
         }
       },
+      openrouterdeepseekr1free = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = "deepseek/deepseek-r1-0528-qwen3-8b:free",
+        max_tokens = 64000,
+      },
       openrouterdeepseekr1 = {
         __inherited_from = 'openai',
         endpoint = 'https://openrouter.ai/api/v1',
         api_key_name = 'OPENROUTER_API_KEY',
         model = "deepseek/deepseek-r1-0528",
-        prompt_opts = {
-          extra_body={
-            provide = {
-              order = { 'deepinfra', 'gmicloud', 'lambda' },
-              sort  = 'throughput'
-            }
-          }
-        }
+        max_tokens = 64000,
       },
       openrouterclaude = {
         __inherited_from = 'openai',
@@ -70,7 +85,7 @@ return {
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
-      support_paste_from_clipboard = false,
+      support_paste_from_clipboard = true,
     },
     mappings = {
       --- @class AvanteConflictMappings
@@ -102,6 +117,8 @@ return {
         apply_cursor = "a",
         switch_windows = "<Tab>",
         reverse_switch_windows = "<S-Tab>",
+        close = { "qqq" },
+        close_from_input = nil, -- e.g., { normal = "<Esc>", insert = "<C-d>" }
       },
     },
     hints = { enabled = true },

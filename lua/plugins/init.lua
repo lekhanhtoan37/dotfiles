@@ -81,4 +81,5 @@ return {
   { import = "plugins.spec.rustaceanvim" },
   { import = "plugins.spec.overseer" },
   { import = "plugins.spec.go" },
+  { import = "plugins.spec.remote" },
 }
