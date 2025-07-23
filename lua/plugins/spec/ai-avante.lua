@@ -6,7 +6,7 @@ return {
   opts = {
     -- Add any configuration here
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "openrouterclaude", -- Recommend using Claude
+    provider = "kimi", -- Recommend using Claude
     auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     providers = {
       openrouterclaude = {
@@ -29,6 +29,36 @@ return {
               },
               temperature = 0,
               max_tokens = 8192,
+              stream = true, -- this will be set by default.
+            },
+          }
+        end,
+        -- The below function is used if the vendors has specific SSE spec that is not claude or openai.
+        parse_response_data = function(data_stream, event_state, opts)
+          require("avante.providers").openai.parse_response(data_stream, event_state, opts)
+        end,
+      },
+      kimi = {
+        endpoint = "https://openrouter.ai/api/v1/chat/completions",
+        model = "moonshotai/kimi-k2",
+        api_key_name = "OPENROUTER_API_KEY",
+        parse_curl_args = function(opts, code_opts)
+          return {
+            url = opts.endpoint,
+            headers = {
+              ["Accept"] = "application/json",
+              ["Content-Type"] = "application/json",
+              ["Authorization"] = "Bearer " .. os.getenv(opts.api_key_name),
+            },
+            body = {
+              model = opts.model,
+              messages = { -- you can make your own message, but this is very advanced
+                { role = "system", content = code_opts.system_prompt },
+                { role = "user", content = require("avante.providers.openai").get_user_message(code_opts) },
+              },
+              temperature = 0,
+              max_tokens = 150000,
+              num_ctx = 150000,
               stream = true, -- this will be set by default.
             },
           }
