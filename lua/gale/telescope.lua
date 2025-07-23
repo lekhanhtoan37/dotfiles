@@ -30,9 +30,8 @@ local files = function(filetype, opts)
     previewer = false,
     layout_config = {
       horizontal = {
-        width = (opts == nil or opts.width == nil) and 0.35 or opts.width,
-        height = (opts == nil or opts.height == nil) and 0.7 or opts.height,
-        preview = (opts == nil or opts.preview == nil) and 0.3 or opts.preview,
+        width = 0.35,
+        height = 0.7,
       },
       mirror = false,
     },
@@ -88,7 +87,7 @@ local files = function(filetype, opts)
       local icon, icon_highlight = utils.get_devicons(tail)
 
       return displayer {
-        { icon,            icon_highlight },
+        { icon, icon_highlight },
         { tail_to_display },
         { path_to_display, "@comment" },
       }
@@ -225,9 +224,9 @@ local grep = function(search, default_text, filetype, opts)
       text = "  " .. text
 
       return displayer {
-        { icon,           icon_highlight },
+        { icon, icon_highlight },
         { tail_to_display },
-        { text,           "@comment" },
+        { text, "@comment" },
       }
     end
 
@@ -298,9 +297,9 @@ local buffers = function(previewer, opts)
       local icon, icon_highlight = utils.get_devicons(tail)
 
       return displayer {
-        { icon,           icon_highlight },
+        { icon, icon_highlight },
         { tail_to_display },
-        { path,           "@comment" },
+        { path, "@comment" },
       }
     end
 

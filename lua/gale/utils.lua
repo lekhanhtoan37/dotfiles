@@ -217,8 +217,7 @@ M.code_action_listener = function()
 
   if has_code_action_support then
     local context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics(buffer) }
-    local params = vim.lsp.util.make_range_params()
-    params.context = context
+    local params = vim.lsp.util.make_range_params(0, "utf-8")
 
     vim.lsp.buf_request(buffer, "textDocument/codeAction", params, function(_, result, _, _)
       vim.fn.sign_unplace("code_action_gear", { buffer = buffer })

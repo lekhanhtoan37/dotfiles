@@ -2,13 +2,13 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   lazy = false,
-  version = false, -- set this if you want to always pull the latest change
+  version = false, -- set this if you wjson_decode'ant to always pull the latest change
   opts = {
     -- Add any configuration here
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-    provider = "openrouterclaude",        -- Recommend using Claude
+    provider = "openrouterclaude", -- Recommend using Claude
     auto_suggestions_provider = "claude", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-    vendors = {
+    providers = {
       openrouterclaude = {
         endpoint = "https://openrouter.ai/api/v1/chat/completions",
         model = "anthropic/claude-3.5-sonnet",
@@ -25,7 +25,7 @@ return {
               model = opts.model,
               messages = { -- you can make your own message, but this is very advanced
                 { role = "system", content = code_opts.system_prompt },
-                { role = "user",   content = require("avante.providers.openai").get_user_message(code_opts) },
+                { role = "user", content = require("avante.providers.openai").get_user_message(code_opts) },
               },
               temperature = 0,
               max_tokens = 8192,
@@ -37,20 +37,7 @@ return {
         parse_response_data = function(data_stream, event_state, opts)
           require("avante.providers").openai.parse_response(data_stream, event_state, opts)
         end,
-      }
-    },
-    claude = {
-      -- anthropic
-      endpoint = "https://openrouter.ai/api/v1",
-      model = "claude-3.5-sonnet",
-      temperature = 0,
-      max_tokens = 4096,
-    },
-    openai = {
-      endpoint = "https://openrouter.ai/api/v1",
-      model = "gpt-3.5-turbo",
-      temperature = 0,
-      max_tokens = 4096,
+      },
     },
     behaviour = {
       auto_suggestions = false, -- Experimental stage
@@ -95,10 +82,10 @@ return {
     windows = {
       ---@type "right" | "left" | "top" | "bottom"
       position = "right", -- the position of the sidebar
-      wrap = true,        -- similar to vim.o.wrap
-      width = 30,         -- default % based on available width
+      wrap = true, -- similar to vim.o.wrap
+      width = 30, -- default % based on available width
       sidebar_header = {
-        enabled = true,   -- true, false to enable/disable the header
+        enabled = true, -- true, false to enable/disable the header
         align = "center", -- left, center, right for title
         rounded = true,
       },
@@ -110,7 +97,7 @@ return {
         start_insert = true, -- Start insert mode when opening the edit window
       },
       ask = {
-        floating = false,    -- Open the 'AvanteAsk' prompt in a floating window
+        floating = false, -- Open the 'AvanteAsk' prompt in a floating window
         start_insert = true, -- Start insert mode when opening the ask window, only effective if floating = true.
         border = "rounded",
       },
@@ -139,7 +126,7 @@ return {
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua",      -- for providers='copilot'
+    "zbirenbaum/copilot.lua", -- for providers='copilot'
     {
       -- support for image pasting
       "HakonHarnes/img-clip.nvim",
@@ -159,7 +146,7 @@ return {
     },
     {
       -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
+      "MeanderingProgrammer/render-markdown.nvim",
       opts = {
         file_types = { "markdown", "Avante" },
       },
