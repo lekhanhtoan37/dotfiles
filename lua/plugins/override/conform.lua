@@ -8,6 +8,7 @@ return {
     vim.keymap.set("n", "<leader>fm", function()
       require("conform").format { lsp_fallback = true }
     end, { desc = "General format file" })
+    vim.g.disable_autoformat = true
   end,
   ---@type conform.setupOpts
   opts = {

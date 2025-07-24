@@ -8,8 +8,8 @@ local themes_customs = require("gale.chadrc_aux").themes_customs
 
 M.base46 = {
   transparency = true,
-  theme = "bearded-arc",
-  theme_toggle = { "bearded-arc", "bearded-arc" },
+  theme = "chadracula",
+  theme_toggle = { "chadracula", "chadracula" },
   integrations = {
     "blankline",
     "cmp",
